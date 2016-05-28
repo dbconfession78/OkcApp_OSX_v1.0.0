@@ -104,7 +104,7 @@ class ViewController: NSViewController {
 		let thread2 = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
 		dispatch_async(thread2, {
 			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-				let maxLimitsPerCycle = 30
+				let maxLimitsPerCycle = 100
 				if visits <= maxLimitsPerCycle {
 					self.isRunning = true
 					self.run(visits)
