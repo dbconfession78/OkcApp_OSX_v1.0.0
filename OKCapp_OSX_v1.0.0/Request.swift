@@ -1,8 +1,5 @@
-//  Detail:  fixed bug where run button didn't read "Run" when
-// run ends.
-
+//
 //  Request.swift
-//  OKCapp_v1.0.4
 //
 //  Created by Stuart Kuredjian on 5/17/16.
 //  Copyright © 2016 s.Ticky Games. All rights reserved.
@@ -20,6 +17,8 @@ class Request: NSOperation {
 	var requestHeaders = NSDictionary()
 	var cookies = [NSHTTPCookie]()
 	var responseHeaders = NSHTTPURLResponse()
+	var accessToken = String()
+	var authorization = String()
 	
 	init(URL: NSURL, method: String, params: String) {
 		self.URL = URL
@@ -37,8 +36,12 @@ class Request: NSOperation {
 	
 	func execute() {
 		let session = NSURLSession.sharedSession()
-		
 		let request = NSMutableURLRequest(URL: URL)
+		if authorization != "" {
+			request.setValue(authorization, forHTTPHeaderField: "Authorization")
+		}
+		
+
 		request.HTTPMethod = self.method
 		request.HTTPBody = self.params.dataUsingEncoding(NSUTF8StringEncoding)
 		self.task = session.dataTaskWithRequest(request) {
@@ -55,13 +58,13 @@ class Request: NSOperation {
 					case 200:
 						self.contentsOfURL = try NSString(contentsOfURL: self.URL, encoding: NSUTF8StringEncoding)
 					case 400:
-						print("400: page not found")
+						print("400: page not found on web")
 						
 					case 404:
-						print("404: page not found")
+						print("404: page not found on server")
 						
 					case 407:
-						print("407:f failed authenticate proxy credentials")
+						print("407: failed authenticate proxy credentials")
 						
 					default:
 						print("unable to get statusCode")

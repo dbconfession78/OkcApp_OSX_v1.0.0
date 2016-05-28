@@ -1,6 +1,5 @@
 //
 //  AppDelegate.swift
-//  OKCapp_OSX_v1.0.0
 //
 //  Created by Stuart Kuredjian on 5/20/16.
 //  Copyright © 2016 s.Ticky Games. All rights reserved.
