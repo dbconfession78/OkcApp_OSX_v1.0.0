@@ -40,6 +40,7 @@ class ViewController: NSViewController {
 	var previouslyVisitedProfileCount = Int()
 	var username = String()
 	var password = String()
+	var loopMisfireCount = 0
 	
 	@IBAction func autoWatchButtonActionPerformed(sender: AnyObject) {
 		let username = "sgk2004"
@@ -143,6 +144,7 @@ class ViewController: NSViewController {
 				dispatch_async(dispatch_get_main_queue(), {
 					self.runButton.title = "Run"
 					self.outputLabel1.stringValue = "Visited: \(self.totalProfilesVisited)  Skipped: \(self.previouslyVisitedProfileCount)"
+					print("loop misfires: \(self.loopMisfireCount)")
 					
 					self.timerIsOn = false
 					dispatch_async(dispatch_get_main_queue(), {
@@ -318,7 +320,7 @@ class ViewController: NSViewController {
 				NSThread.sleepForTimeInterval(0.5)
 			}
 			
-			let pattern = "(\"username\") : \"([\\w\\\\ÆÐƎƏƐƔĲŊŒ\\u1E9EÞǷȜæðǝəɛɣĳŋœĸſßþƿȝĄƁÇĐƊĘĦĮƘŁØƠŞȘŢȚŦŲƯY̨Ƴąɓçđɗęħįƙłøơşșţțŧųưy̨ƴÁÀÂÄǍĂĀÃÅǺĄÆǼǢƁĆĊĈČÇĎḌĐƊÐÉÈĖÊËĚĔĒĘẸƎƏƐĠĜįịĳĵķƙĸĺļłľŀŉńn̈ňñņŋóòôöǒŏōõőọøǿơœŔŘŖŚŜŠŞȘṢ\\u1E9EŤŢṬŦÞÚÙÛÜǓŬŪŨŰŮŲỤƯẂẀŴẄǷÝỲŶŸȲỸƳŹŻŽẒŕřŗſśŝšşșṣßťţṭŧþúùûüǔŭūũűůųụưẃẁŵẅƿýỳŷÿȳỹƴźżžẓ±-]+)\","
+			let pattern = "(\"username\") : \"([\\w\\\\ÆÐƎƏƐƔĲŊŒ\\u1E9EÞǷȜæðǝəɛɣĳŋœĸſßþƿȝĄƁÇĐƊĘĦĮƘŁØƠŞȘŢȚŦŲƯY̨Ƴąɓçđɗęħįƙłøơşșţțŧųưy̨ƴÁÀÂÄǍĂĀÃÅǺĄÆǼǢƁĆĊĈČÇĎḌĐƊÐÉÈĖÊËĚĔĒĘẸƎƏƐĠĜįịĳĵķƙĸĺļłľŀŉńn̈ňñņŋóòôöǒŏōõőọøǿơœŔŘŖŚŜŠŞȘṢ\\u1E9EŤŢṬŦÞÚÙÛÜǓŬŪŨŰŮŲỤƯẂẀŴẄǷÝỲŶŸȲỸƳŹŻŽẒŕřŗſśŝšşșṣßťţṭŧþúùûüüǔŭūũűůųụưẃẁŵẅƿýỳŷÿȳỹƴźżžẓ±-]+)\","
 			
 			let contentsOfURL = request.contentsOfURL as String
 			
@@ -338,11 +340,16 @@ class ViewController: NSViewController {
 			var didVisitProfile = false
 			for (index, profile) in profiles.enumerate() {
 				let thread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-				print("\(index+1). \(profiles[index]): ", terminator: "")
+				print("\(self.totalProfilesVisited+1). \(profiles[index]): ", terminator: "")
 				dispatch_async(dispatch_get_main_queue(), {
 					self.outputLabel1.stringValue = "\(profile as String):"
 				})
 				self.isVisiting = true
+				
+//				let fileContents = self.readFile("profilesVisited.txt")
+//				if !fileContents.containsString(profile as String) {
+//						self.writeTextToFile(profile as String, fileName: "profilesVisited.txt")
+//				}
 				dispatch_async(thread, {
 						didVisitProfile = self.visitProfile(profile)
 					})
@@ -379,11 +386,25 @@ class ViewController: NSViewController {
 						break
 					}
 			}
+			NSThread.sleepForTimeInterval(0.5)
 			self.isRunning = false
 		})
 		
+		var profileInterval = 0.0
 		while isRunning {
-			NSThread.sleepForTimeInterval(0.0)
+			NSThread.sleepForTimeInterval(1.0)
+			if isVisiting {
+				profileInterval += 1.0
+//				print(profileInterval)
+				if profileInterval > 10.0 {
+					isVisiting = false
+					self.loopMisfireCount += 1
+//					break
+				}
+			} else {
+				profileInterval = 0.0
+			}
+			
 		}
 	}
 	
@@ -445,8 +466,12 @@ class ViewController: NSViewController {
 	}
 	
 	func hideProfile(profile: String) {
-		let URL = NSURL(string: "https://www.okcupid.com/1/apitun/profile/\(profile)/hide")
+		//TODO: use encoding to account for special characters and languages
+		var URL = NSURL(string: "https://www.okcupid.com/1/apitun/profile/\(profile)/hide")
 		let params = ""
+		if URL == nil {
+			URL = NSURL(string: "https://www.okcupid.com/1/apitun/profile/\(profile)/hide")
+		}
 		let request = Request(URL: URL!, method: "POST", params: params)
 		request.isRequesting = true
 		let accessToken = addPercentEscapes(self.accessToken)
