@@ -57,6 +57,7 @@ class Request: NSOperation {
 						
 					case 200:
 						self.contentsOfURL = try NSString(contentsOfURL: self.URL, encoding: NSUTF8StringEncoding)
+						
 					case 400:
 						print("400: page not found on web")
 						

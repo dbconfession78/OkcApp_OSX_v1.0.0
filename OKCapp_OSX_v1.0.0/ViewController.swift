@@ -23,7 +23,7 @@ class ViewController: NSViewController {
 	@IBOutlet weak var proxyUserTextField: NSTextField!
 	@IBOutlet weak var proxyPwTextField: NSTextField!
 	@IBOutlet weak var runTimeLabel: NSTextField!
-	@IBOutlet weak var outputLabel1: NSTextField!
+	@IBOutlet public weak var outputLabel1: NSTextField!
 	@IBOutlet weak var resetButton: NSButton!
 	@IBOutlet weak var outputLabel2: NSTextField!
 
@@ -41,6 +41,7 @@ class ViewController: NSViewController {
 	var username = String()
 	var password = String()
 	var loopMisfireCount = 0
+	var previousTotalProfilesVisited = 0
 	
 	@IBAction func autoWatchButtonActionPerformed(sender: AnyObject) {
 		let username = "sgk2004"
@@ -359,6 +360,7 @@ class ViewController: NSViewController {
 					// If visited, "OK" to console
 					if didVisitProfile {
 						print("OK")
+						self.previousTotalProfilesVisited = self.totalProfilesVisited
 						dispatch_async(dispatch_get_main_queue(), {
 							profilesVisited += 1
 							self.totalProfilesVisited += 1
@@ -366,7 +368,7 @@ class ViewController: NSViewController {
 						})
 						// "OK" to UI
 						dispatch_async(dispatch_get_main_queue(), {
-							self.outputLabel1.stringValue = "\(profile): OK" as String
+							self.outputLabel1.stringValue = "\(profile): \(request.statusCode): OK " as String
 							if self.shouldHideProfiles {
 								// "Hiding" to UI
 								let originString = self.outputLabel1.stringValue
@@ -379,6 +381,10 @@ class ViewController: NSViewController {
 					} else {
 						print("FAIL")
 					}
+				
+				if self.previouslyVisitedProfileCount == self.totalProfilesVisited {
+					NSThread.sleepForTimeInterval(1.0)
+				}
 					
 					if limit != index+1 {
 						NSThread.sleepForTimeInterval(visitInterval)
@@ -449,10 +455,21 @@ class ViewController: NSViewController {
 			request.completionBlock = {() -> () in
 				request.execute()
 			}
+			
+
+			
+			
+			
 			while request.isRequesting {
 				NSThread.sleepForTimeInterval(1.0)
 			}
 			
+			dispatch_async(dispatch_get_main_queue(), {
+				let statusCode = request.statusCode
+				var hidingText: String
+				self.outputLabel1.stringValue = "\(profile): \(String(statusCode))"
+			})
+		
 			NSThread.sleepForTimeInterval(1)
 			if request.contentsOfURL.containsString("<title>\(profile) /") {
 				didVisitProfile = true
@@ -469,21 +486,31 @@ class ViewController: NSViewController {
 		//TODO: use encoding to account for special characters and languages
 		var URL = NSURL(string: "https://www.okcupid.com/1/apitun/profile/\(profile)/hide")
 		let params = ""
-		if URL == nil {
-			URL = NSURL(string: "https://www.okcupid.com/1/apitun/profile/\(profile)/hide")
+		if URL != nil {
+			let request = Request(URL: URL!, method: "POST", params: params)
+			request.isRequesting = true
+			let accessToken = addPercentEscapes(self.accessToken)
+			request.authorization = "Bearer \(accessToken)"
+			queue.addOperation(request)
+			//		request.threadPriority = 0
+			request.completionBlock = {() -> () in
+				request.execute()
+			}
+			while request.isRequesting {
+				NSThread.sleepForTimeInterval(0.0)
+			}
+			dispatch_async(dispatch_get_main_queue(), {
+				var status: String
+				if request.statusCode == 200{
+					status = "OK"
+				} else {
+					status = ""
+				}
+				
+				self.outputLabel1.stringValue = "\(profile): Hiding... \(request.statusCode): \(status)"
+			})
 		}
-		let request = Request(URL: URL!, method: "POST", params: params)
-		request.isRequesting = true
-		let accessToken = addPercentEscapes(self.accessToken)
-		request.authorization = "Bearer \(accessToken)"
-		queue.addOperation(request)
-//		request.threadPriority = 0
-		request.completionBlock = {() -> () in
-			request.execute()
-		}
-		while request.isRequesting {
-			NSThread.sleepForTimeInterval(0.0)
-		}
+		
 	}
 	
 	func unhideProfile(profile: String) {
