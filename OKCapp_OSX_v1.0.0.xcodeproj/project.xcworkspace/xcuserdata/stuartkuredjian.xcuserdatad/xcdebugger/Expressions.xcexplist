@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "ViewController.(run(Int) -&gt; ()).(closure #1):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "profile = &quot;sgk2004&quot;">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.(visitProfile(NSString) -&gt; Bool).(closure #1):ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.unhideProfile(String) -&gt; ():ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.login(String, password : String) -&gt; String:ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.loginButtonActionPerformed(AnyObject) -&gt; ():ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.(run(Int) -&gt; ()).(closure #1).(closure #3):ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.(run(Int) -&gt; ()).(closure #1).(closure #5):ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.hideProfile(String) -&gt; ():ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "print(request.isRequesting)">
+            </PersistentString>
+            <PersistentString
+               value = "request.isRequesting = false">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.testButtonActionPerformed(AnyObject) -&gt; ():ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.(startRunTimer() -&gt; ()).(closure #1).(closure #1):ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.(hideProfile(String) -&gt; ()).(closure #2):ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.(login(String, password : String) -&gt; String).(closure #1):ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.(hideProfile(String) -&gt; ()).(closure #1):ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "Request.execute() -&gt; ():Request.swift">
+      </ContextState>
+      <ContextState
+         contextName = "specialized ViewController.(run(Int) -&gt; ()).(closure #1):ViewController.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
