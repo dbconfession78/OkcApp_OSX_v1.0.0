@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF0384FB1D01F11300D8E3FF /* URLVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0384FA1D01F11300D8E3FF /* URLVisitor.swift */; };
+		EF0384FD1D01FC6F00D8E3FF /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0384FC1D01FC6F00D8E3FF /* AccountManager.swift */; };
+		EF495F831D1DC9E90094B167 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF495F821D1DC9E90094B167 /* AppController.swift */; };
 		EFCC2C671CEF958300F51B17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCC2C661CEF958300F51B17 /* AppDelegate.swift */; };
 		EFCC2C691CEF958300F51B17 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCC2C681CEF958300F51B17 /* ViewController.swift */; };
 		EFCC2C6B1CEF958300F51B17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFCC2C6A1CEF958300F51B17 /* Assets.xcassets */; };
@@ -15,6 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EF0384FA1D01F11300D8E3FF /* URLVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLVisitor.swift; path = ../URLVisitor.swift; sourceTree = "<group>"; };
+		EF0384FC1D01FC6F00D8E3FF /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
+		EF495F821D1DC9E90094B167 /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppController.swift; path = ../AppController.swift; sourceTree = "<group>"; };
 		EFCC2C631CEF958300F51B17 /* OKCapp_OSX_v1.0.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OKCapp_OSX_v1.0.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFCC2C661CEF958300F51B17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EFCC2C681CEF958300F51B17 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -55,11 +61,14 @@
 			isa = PBXGroup;
 			children = (
 				EFCC2C661CEF958300F51B17 /* AppDelegate.swift */,
+				EF495F821D1DC9E90094B167 /* AppController.swift */,
 				EFCC2C681CEF958300F51B17 /* ViewController.swift */,
-				EFCC2C6A1CEF958300F51B17 /* Assets.xcassets */,
-				EFCC2C6C1CEF958300F51B17 /* Main.storyboard */,
-				EFCC2C6F1CEF958300F51B17 /* Info.plist */,
 				EFCC2C751CEFA3E800F51B17 /* Request.swift */,
+				EF0384FC1D01FC6F00D8E3FF /* AccountManager.swift */,
+				EF0384FA1D01F11300D8E3FF /* URLVisitor.swift */,
+				EFCC2C6C1CEF958300F51B17 /* Main.storyboard */,
+				EFCC2C6A1CEF958300F51B17 /* Assets.xcassets */,
+				EFCC2C6F1CEF958300F51B17 /* Info.plist */,
 			);
 			path = OKCapp_OSX_v1.0.0;
 			sourceTree = "<group>";
@@ -134,9 +143,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF0384FD1D01FC6F00D8E3FF /* AccountManager.swift in Sources */,
 				EFCC2C691CEF958300F51B17 /* ViewController.swift in Sources */,
 				EFCC2C761CEFA3E800F51B17 /* Request.swift in Sources */,
+				EF0384FB1D01F11300D8E3FF /* URLVisitor.swift in Sources */,
 				EFCC2C671CEF958300F51B17 /* AppDelegate.swift in Sources */,
+				EF495F831D1DC9E90094B167 /* AppController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,7 +256,7 @@
 				INFOPLIST_FILE = OKCapp_OSX_v1.0.0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "s.Ticky-Studios.OKCapp-OSX-v1-0-0";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = OKCapp_OSX_v1.0.0;
 			};
 			name = Debug;
 		};
@@ -256,7 +268,7 @@
 				INFOPLIST_FILE = OKCapp_OSX_v1.0.0/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "s.Ticky-Studios.OKCapp-OSX-v1-0-0";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = OKCapp_OSX_v1.0.0;
 			};
 			name = Release;
 		};
@@ -279,6 +291,7 @@
 				EFCC2C741CEF958300F51B17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
